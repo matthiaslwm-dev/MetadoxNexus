@@ -9,11 +9,12 @@ import { logout } from "@/app/actions/auth";
 
 export function BottomNav() {
   const pathname = usePathname();
+  const mobileLinks = navLinks.filter((link) => !link.hideOnMobile);
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 backdrop-blur pb-[env(safe-area-inset-bottom)] md:hidden">
       <div className="grid grid-cols-5">
-        {navLinks.map((link) => {
+        {mobileLinks.map((link) => {
           const active =
             pathname === link.href || pathname.startsWith(link.href + "/");
           return (

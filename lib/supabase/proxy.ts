@@ -28,11 +28,19 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
+  const path = request.nextUrl.pathname;
+
+  // API routes authenticate themselves (e.g. the Signal Feed sync route
+  // checks a bearer secret, since it's called by an unattended cron with no
+  // user session) rather than relying on this cookie-session redirect gate.
+  if (path.startsWith("/api/")) {
+    return supabaseResponse;
+  }
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const path = request.nextUrl.pathname;
   const isPublicRoute = path === "/";
 
   if (!user && !isPublicRoute) {

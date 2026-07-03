@@ -259,6 +259,70 @@ export function SearchIcon({ className }: IconProps) {
   );
 }
 
+export function FacebookIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="2" y="2" width="20" height="20" rx="4" fill="#1877F2" />
+      <path
+        d="M15.5 8.5h-1.7c-.6 0-1.05.45-1.05 1.05V11h2.75l-.35 2.5h-2.4V19h-2.55v-5.5H8V11h2.2V9.2c0-2.05 1.25-3.2 3.1-3.2.9 0 1.85.15 1.85.15v2.35Z"
+        fill="white"
+      />
+    </svg>
+  );
+}
+
+export function SignalIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M4 14a1 1 0 0 1-1-1 9 9 0 0 1 9-9 1 1 0 0 1 0 2 7 7 0 0 0-7 7 1 1 0 0 1-1 1Z" />
+      <path d="M4 20a1 1 0 0 1-1-1c0-8.28 6.72-15 15-15a1 1 0 0 1 0 2C11.03 6 5 12.03 5 19a1 1 0 0 1-1 1Z" />
+      <circle cx="4" cy="20" r="2" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function SparklesIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" />
+      <path d="M12 8l1.2 2.8L16 12l-2.8 1.2L12 16l-1.2-2.8L8 12l2.8-1.2L12 8Z" />
+    </svg>
+  );
+}
+
+export function CopyIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect x="9" y="9" width="13" height="13" rx="2" />
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+    </svg>
+  );
+}
+
 const iconMap = {
   grid: GridIcon,
   users: UsersIcon,
@@ -273,7 +337,11 @@ const iconMap = {
   plus: PlusIcon,
   instagram: InstagramIcon,
   linkedin: LinkedInIcon,
+  facebook: FacebookIcon,
   search: SearchIcon,
+  signal: SignalIcon,
+  sparkles: SparklesIcon,
+  copy: CopyIcon,
 };
 
 export function Icon({

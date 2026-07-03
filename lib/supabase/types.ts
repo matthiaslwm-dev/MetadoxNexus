@@ -29,6 +29,61 @@ export type Lead = {
   priority: LeadPriority;
   notes: string | null;
   next_follow_up: string | null;
+  signal_feed_id: string | null;
+  source_platform: string | null;
+  source_url: string | null;
+  discovery_date: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type SignalFeedStatus =
+  | "New"
+  | "Reviewed"
+  | "Saved"
+  | "Dismissed"
+  | "Not Applicable";
+
+export type SignalConfidence = "High" | "Medium" | "Low";
+export type SignalOpportunityLevel = "High" | "Medium" | "Low";
+export type SignalPriority = "Hot" | "Warm" | "Cold";
+
+export type SignalOpportunityType =
+  | "Career Opportunity"
+  | "Business Opportunity"
+  | "Recruitment"
+  | "AI Consulting"
+  | "Networking"
+  | "Partnership"
+  | "Referral"
+  | "Investment"
+  | "Other";
+
+export type SignalFeed = {
+  id: string;
+  platform: string;
+  display_name: string;
+  username: string | null;
+  avatar_url: string | null;
+  profile_url: string | null;
+  post_url: string | null;
+  post_text: string;
+  post_date: string | null;
+  pain_summary: string | null;
+  pain_categories: string[];
+  lead_score: number;
+  intent_score: number;
+  confidence_level: SignalConfidence;
+  opportunity_level: SignalOpportunityLevel;
+  priority: SignalPriority;
+  opportunity_type: SignalOpportunityType | null;
+  why_this_is_a_signal: string | null;
+  potential_needs: string | null;
+  ai_reasoning: string | null;
+  suggested_openers: string[];
+  recommended_action: string | null;
+  status: SignalFeedStatus;
+  saved_lead_id: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -85,6 +140,31 @@ export type Database = {
             columns: ["organisation_id"];
             isOneToOne: false;
             referencedRelation: "organisations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "leads_signal_feed_id_fkey";
+            columns: ["signal_feed_id"];
+            isOneToOne: false;
+            referencedRelation: "signal_feed";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      signal_feed: {
+        Row: SignalFeed;
+        Insert: Partial<SignalFeed> & {
+          display_name: string;
+          post_text: string;
+          platform: string;
+        };
+        Update: Partial<SignalFeed>;
+        Relationships: [
+          {
+            foreignKeyName: "signal_feed_saved_lead_id_fkey";
+            columns: ["saved_lead_id"];
+            isOneToOne: false;
+            referencedRelation: "leads";
             referencedColumns: ["id"];
           }
         ];
