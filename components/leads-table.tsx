@@ -132,7 +132,7 @@ export function LeadsTable({
             <SortableHeader column="name" label="Name" activeSort={activeSort} />
             <SortableHeader column="organisation_name" label="Organisation" activeSort={activeSort} />
             <SortableHeader column="ranking" label="Ranking" activeSort={activeSort} />
-            <SortableHeader column="measure_value" label="Measure Value" activeSort={activeSort} />
+            <SortableHeader column="measure_value" label="Earnings" activeSort={activeSort} />
             <SortableHeader column="status" label="Status" activeSort={activeSort} />
             <SortableHeader column="priority" label="Priority" activeSort={activeSort} />
             <SortableHeader column="next_follow_up" label="Next Follow Up" activeSort={activeSort} />
@@ -190,6 +190,17 @@ export function LeadsTable({
                     className="mr-2 inline-flex items-center gap-1.5 rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100"
                   >
                     <Icon name="instagram" className="h-3.5 w-3.5" />
+                  </a>
+                )}
+                {lead.linkedin_url && (
+                  <a
+                    href={normalizeUrl(lead.linkedin_url)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Open LinkedIn"
+                    className="mr-2 inline-flex items-center gap-1.5 rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100"
+                  >
+                    <Icon name="linkedin" className="h-3.5 w-3.5" />
                   </a>
                 )}
                 <Link

@@ -15,6 +15,7 @@ export type LeadListItem = {
   next_follow_up: string | null;
   organisation_name: string | null;
   instagram_url: string | null;
+  linkedin_url: string | null;
   ranking: number | null;
   measure_value: number | null;
   is_overdue: boolean;
@@ -68,7 +69,7 @@ function LeadCard({ lead }: { lead: LeadListItem }) {
           <p className="font-medium text-gray-900">{lead.ranking ?? "—"}</p>
         </div>
         <div>
-          <p className="text-gray-400">Measure Value</p>
+          <p className="text-gray-400">Earnings</p>
           <p className="font-medium text-gray-900">
             {lead.measure_value ?? "—"}
           </p>
@@ -104,6 +105,18 @@ function LeadCard({ lead }: { lead: LeadListItem }) {
             style={{ minHeight: 44, minWidth: 44 }}
           >
             <Icon name="instagram" className="h-4 w-4" />
+          </a>
+        )}
+        {lead.linkedin_url && (
+          <a
+            href={normalizeUrl(lead.linkedin_url)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open LinkedIn"
+            className="flex items-center justify-center rounded-lg border border-gray-300 px-3 py-2.5 text-gray-700 transition-colors hover:bg-gray-100"
+            style={{ minHeight: 44, minWidth: 44 }}
+          >
+            <Icon name="linkedin" className="h-4 w-4" />
           </a>
         )}
       </div>

@@ -173,7 +173,7 @@ export function CsvImportForm() {
                     <th className="px-4 py-3 font-medium">Organisation</th>
                     <th className="px-4 py-3 font-medium">Measure Name</th>
                     <th className="px-4 py-3 font-medium">Ranking</th>
-                    <th className="px-4 py-3 font-medium">Measure Value</th>
+                    <th className="px-4 py-3 font-medium">Earnings</th>
                   </tr>
                 </thead>
                 <motion.tbody
@@ -229,7 +229,7 @@ export function CsvImportForm() {
                       <p className="text-gray-900">{row.ranking ?? "—"}</p>
                     </div>
                     <div>
-                      <p className="text-gray-400">Value</p>
+                      <p className="text-gray-400">Earnings</p>
                       <p className="text-gray-900">{row.measureValue ?? "—"}</p>
                     </div>
                   </div>

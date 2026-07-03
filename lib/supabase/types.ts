@@ -56,6 +56,7 @@ export type LeadWithLatestMetric = {
   organisation_id: string | null;
   organisation_name: string | null;
   instagram_url: string | null;
+  linkedin_url: string | null;
   status: LeadStatus;
   priority: LeadPriority;
   next_follow_up: string | null;

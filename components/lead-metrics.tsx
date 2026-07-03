@@ -40,7 +40,7 @@ export function LeadMetrics({
             </p>
           </div>
           <div>
-            <p className="text-gray-400">Measure Value</p>
+            <p className="text-gray-400">Earnings</p>
             <p className="font-medium text-gray-900">
               {metric.measure_value ?? "—"}
             </p>

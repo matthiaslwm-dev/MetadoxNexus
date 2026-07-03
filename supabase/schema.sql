@@ -104,7 +104,8 @@ select
   m.measure_name,
   m.ranking,
   m.measure_value,
-  l.instagram_url
+  l.instagram_url,
+  l.linkedin_url
 from leads l
 left join organisations o on o.id = l.organisation_id
 left join lateral (

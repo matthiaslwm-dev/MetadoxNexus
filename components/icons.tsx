@@ -213,6 +213,18 @@ export function InstagramIcon({ className }: IconProps) {
   );
 }
 
+export function LinkedInIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="2" y="2" width="20" height="20" rx="4" fill="#0A66C2" />
+      <path
+        d="M7.4 9.5h2.6v8.3H7.4V9.5Zm1.3-4.2a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm3.2 4.2h2.5v1.13h.04c.35-.66 1.2-1.35 2.47-1.35 2.64 0 3.13 1.74 3.13 4v4.52h-2.6v-4.01c0-.96-.02-2.19-1.33-2.19-1.34 0-1.54 1.05-1.54 2.12v4.08h-2.6V9.5Z"
+        fill="white"
+      />
+    </svg>
+  );
+}
+
 export function PlusIcon({ className }: IconProps) {
   return (
     <svg
@@ -230,6 +242,23 @@ export function PlusIcon({ className }: IconProps) {
   );
 }
 
+export function SearchIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <circle cx="11" cy="11" r="8" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
+  );
+}
+
 const iconMap = {
   grid: GridIcon,
   users: UsersIcon,
@@ -243,6 +272,8 @@ const iconMap = {
   trash: TrashIcon,
   plus: PlusIcon,
   instagram: InstagramIcon,
+  linkedin: LinkedInIcon,
+  search: SearchIcon,
 };
 
 export function Icon({

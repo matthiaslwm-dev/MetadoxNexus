@@ -180,6 +180,64 @@ export async function deleteLead(leadId: string) {
   return { success: true };
 }
 
+export type SocialCandidate = { title: string; link: string; snippet: string };
+export type FindSocialCandidatesState = {
+  candidates?: SocialCandidate[];
+  error?: string;
+};
+
+// Uses Google's Programmable Search API (not LinkedIn/Instagram scraping) to
+// surface likely profile URLs so the user can confirm a match by hand
+// instead of searching Google manually for every lead.
+export async function findSocialCandidates(
+  name: string,
+  organisationName: string,
+  platform: "linkedin" | "instagram"
+): Promise<FindSocialCandidatesState> {
+  const apiKey = process.env.GOOGLE_CSE_API_KEY;
+  const cseId = process.env.GOOGLE_CSE_ID;
+
+  if (!apiKey || !cseId) {
+    return {
+      error:
+        "Google search is not configured. Set GOOGLE_CSE_API_KEY and GOOGLE_CSE_ID.",
+    };
+  }
+  if (!name.trim()) {
+    return { error: "Lead name is required to search." };
+  }
+
+  const site = platform === "linkedin" ? "site:linkedin.com/in" : "site:instagram.com";
+  const query = organisationName.trim()
+    ? `${site} "${name}" "${organisationName}"`
+    : `${site} "${name}"`;
+
+  const url = new URL("https://www.googleapis.com/customsearch/v1");
+  url.searchParams.set("key", apiKey);
+  url.searchParams.set("cx", cseId);
+  url.searchParams.set("q", query);
+  url.searchParams.set("num", "5");
+
+  try {
+    const res = await fetch(url.toString());
+    if (!res.ok) {
+      const body = await res.text();
+      return { error: `Google search failed (${res.status}): ${body.slice(0, 200)}` };
+    }
+    const data = await res.json();
+    const candidates: SocialCandidate[] = (data.items ?? []).map(
+      (item: { title: string; link: string; snippet: string }) => ({
+        title: item.title,
+        link: item.link,
+        snippet: item.snippet,
+      })
+    );
+    return { candidates };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : "Search failed." };
+  }
+}
+
 export async function addActivity(leadId: string, formData: FormData) {
   const content = String(formData.get("content") ?? "").trim();
   if (!content) return;

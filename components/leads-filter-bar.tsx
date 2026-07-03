@@ -129,7 +129,7 @@ export function LeadsFilterBar() {
               setMinValue(e.target.value);
               handleDebounced("minValue", e.target.value);
             }}
-            placeholder="Min value"
+            placeholder="Min earnings"
             className={inputClass}
             style={{ minHeight: 44 }}
           />
@@ -142,7 +142,7 @@ export function LeadsFilterBar() {
               setMaxValue(e.target.value);
               handleDebounced("maxValue", e.target.value);
             }}
-            placeholder="Max value"
+            placeholder="Max earnings"
             className={inputClass}
             style={{ minHeight: 44 }}
           />

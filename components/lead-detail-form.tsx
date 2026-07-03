@@ -7,6 +7,7 @@ import type { Lead } from "@/lib/supabase/types";
 import { inputClass, normalizeUrl } from "@/lib/ui";
 import { fadeInUp, staggerContainer } from "@/lib/motion";
 import { Icon } from "@/components/icons";
+import { SocialFinder } from "@/components/social-finder";
 
 const STATUSES = [
   "New",
@@ -23,26 +24,42 @@ function Field({
   label,
   children,
   action,
+  onClear,
+  finder,
 }: {
   label: string;
   children: React.ReactNode;
   action?: { href: string; icon: "phone" | "mail" | "externalLink"; label: string };
+  onClear?: () => void;
+  finder?: React.ReactNode;
 }) {
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between">
         <label className="text-sm font-medium text-gray-700">{label}</label>
-        {action && (
-          <a
-            href={action.href}
-            target={action.icon === "externalLink" ? "_blank" : undefined}
-            rel={action.icon === "externalLink" ? "noopener noreferrer" : undefined}
-            aria-label={action.label}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900"
-          >
-            <Icon name={action.icon} className="h-4 w-4" />
-          </a>
-        )}
+        <div className="flex items-center gap-1">
+          {finder}
+          {action && (
+            <a
+              href={action.href}
+              target={action.icon === "externalLink" ? "_blank" : undefined}
+              rel={action.icon === "externalLink" ? "noopener noreferrer" : undefined}
+              aria-label={action.label}
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900"
+            >
+              <Icon name={action.icon} className="h-4 w-4" />
+            </a>
+          )}
+          {onClear && (
+            <button
+              type="button"
+              onClick={onClear}
+              className="text-xs font-medium text-gray-400 transition-colors hover:text-gray-900"
+            >
+              Clear
+            </button>
+          )}
+        </div>
       </div>
       {children}
     </div>
@@ -67,6 +84,11 @@ export function LeadDetailForm({
   >(updateLeadWithId, undefined);
 
   const [justSaved, setJustSaved] = useState(false);
+  const [nextFollowUp, setNextFollowUp] = useState(lead.next_follow_up ?? "");
+  const [nameValue, setNameValue] = useState(lead.name);
+  const [organisationValue, setOrganisationValue] = useState(organisationName);
+  const [linkedinUrl, setLinkedinUrl] = useState(lead.linkedin_url ?? "");
+  const [instagramUrl, setInstagramUrl] = useState(lead.instagram_url ?? "");
 
   useEffect(() => {
     if (!state?.success) return;
@@ -90,7 +112,8 @@ export function LeadDetailForm({
         <Field label="Name">
           <input
             name="name"
-            defaultValue={lead.name}
+            value={nameValue}
+            onChange={(e) => setNameValue(e.target.value)}
             required
             className={inputClass}
           />
@@ -101,7 +124,8 @@ export function LeadDetailForm({
         <Field label="Organisation">
           <input
             name="organisation"
-            defaultValue={organisationName}
+            value={organisationValue}
+            onChange={(e) => setOrganisationValue(e.target.value)}
             className={inputClass}
           />
         </Field>
@@ -133,14 +157,23 @@ export function LeadDetailForm({
           <Field
             label="LinkedIn URL"
             action={
-              lead.linkedin_url
-                ? { href: normalizeUrl(lead.linkedin_url), icon: "externalLink", label: "Open LinkedIn" }
+              linkedinUrl
+                ? { href: normalizeUrl(linkedinUrl), icon: "externalLink", label: "Open LinkedIn" }
                 : undefined
+            }
+            finder={
+              <SocialFinder
+                name={nameValue}
+                organisationName={organisationValue}
+                platform="linkedin"
+                onSelect={setLinkedinUrl}
+              />
             }
           >
             <input
               name="linkedin_url"
-              defaultValue={lead.linkedin_url ?? ""}
+              value={linkedinUrl}
+              onChange={(e) => setLinkedinUrl(e.target.value)}
               className={inputClass}
             />
           </Field>
@@ -161,14 +194,23 @@ export function LeadDetailForm({
           <Field
             label="Instagram URL"
             action={
-              lead.instagram_url
-                ? { href: normalizeUrl(lead.instagram_url), icon: "externalLink", label: "Open Instagram" }
+              instagramUrl
+                ? { href: normalizeUrl(instagramUrl), icon: "externalLink", label: "Open Instagram" }
                 : undefined
+            }
+            finder={
+              <SocialFinder
+                name={nameValue}
+                organisationName={organisationValue}
+                platform="instagram"
+                onSelect={setInstagramUrl}
+              />
             }
           >
             <input
               name="instagram_url"
-              defaultValue={lead.instagram_url ?? ""}
+              value={instagramUrl}
+              onChange={(e) => setInstagramUrl(e.target.value)}
               className={inputClass}
             />
           </Field>
@@ -217,11 +259,15 @@ export function LeadDetailForm({
               ))}
             </select>
           </Field>
-          <Field label="Next Follow Up">
+          <Field
+            label="Next Follow Up"
+            onClear={nextFollowUp ? () => setNextFollowUp("") : undefined}
+          >
             <input
               name="next_follow_up"
               type="date"
-              defaultValue={lead.next_follow_up ?? ""}
+              value={nextFollowUp}
+              onChange={(e) => setNextFollowUp(e.target.value)}
               className={inputClass}
             />
           </Field>

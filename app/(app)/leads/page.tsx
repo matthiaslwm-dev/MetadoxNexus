@@ -95,6 +95,7 @@ export default async function LeadsPage({
     next_follow_up: lead.next_follow_up,
     organisation_name: lead.organisation_name,
     instagram_url: lead.instagram_url,
+    linkedin_url: lead.linkedin_url,
     ranking: lead.ranking,
     measure_value: lead.measure_value,
     is_overdue:
