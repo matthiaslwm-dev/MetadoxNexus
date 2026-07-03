@@ -1,9 +1,11 @@
 export type LeadStatus =
   | "New"
+  | "Shortlisted"
   | "Contacted"
   | "Meeting Booked"
   | "Won"
-  | "Lost";
+  | "Lost"
+  | "Not Applicable";
 
 export type LeadPriority = "High" | "Medium" | "Low";
 
@@ -53,6 +55,7 @@ export type LeadWithLatestMetric = {
   name: string;
   organisation_id: string | null;
   organisation_name: string | null;
+  instagram_url: string | null;
   status: LeadStatus;
   priority: LeadPriority;
   next_follow_up: string | null;

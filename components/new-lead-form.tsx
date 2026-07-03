@@ -7,7 +7,15 @@ import { inputClass } from "@/lib/ui";
 import { fadeInUp, staggerContainer } from "@/lib/motion";
 import { Icon } from "@/components/icons";
 
-const STATUSES = ["New", "Contacted", "Meeting Booked", "Won", "Lost"];
+const STATUSES = [
+  "New",
+  "Shortlisted",
+  "Contacted",
+  "Meeting Booked",
+  "Won",
+  "Lost",
+  "Not Applicable",
+];
 const PRIORITIES = ["High", "Medium", "Low"];
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {

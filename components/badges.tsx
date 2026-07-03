@@ -2,18 +2,22 @@ import type { LeadPriority, LeadStatus } from "@/lib/supabase/types";
 
 const statusStyles: Record<LeadStatus, string> = {
   New: "bg-blue-50 text-blue-700 ring-blue-600/15",
+  Shortlisted: "bg-cyan-50 text-cyan-700 ring-cyan-600/15",
   Contacted: "bg-amber-50 text-amber-700 ring-amber-600/15",
   "Meeting Booked": "bg-purple-50 text-purple-700 ring-purple-600/15",
   Won: "bg-green-50 text-green-700 ring-green-600/15",
   Lost: "bg-gray-100 text-gray-500 ring-gray-500/10",
+  "Not Applicable": "bg-gray-100 text-gray-400 ring-gray-500/10",
 };
 
 const statusDot: Record<LeadStatus, string> = {
   New: "bg-blue-500",
+  Shortlisted: "bg-cyan-500",
   Contacted: "bg-amber-500",
   "Meeting Booked": "bg-purple-500",
   Won: "bg-green-500",
   Lost: "bg-gray-400",
+  "Not Applicable": "bg-gray-300",
 };
 
 const priorityStyles: Record<LeadPriority, string> = {

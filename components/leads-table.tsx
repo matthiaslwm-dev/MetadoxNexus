@@ -8,6 +8,7 @@ import { StatusBadge, PriorityBadge } from "@/components/badges";
 import { fadeInUp, staggerContainer } from "@/lib/motion";
 import { deleteLead } from "@/app/(app)/leads/actions";
 import { Icon } from "@/components/icons";
+import { normalizeUrl } from "@/lib/ui";
 import { ConfirmDialog } from "@/components/confirm-dialog";
 import type { SortColumn, SortDirection } from "@/lib/leads-sort";
 import type { LeadListItem } from "@/components/lead-card";
@@ -180,6 +181,17 @@ export function LeadsTable({
                 </div>
               </td>
               <td className="px-4 py-3 text-right">
+                {lead.instagram_url && (
+                  <a
+                    href={normalizeUrl(lead.instagram_url)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Open Instagram"
+                    className="mr-2 inline-flex items-center gap-1.5 rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100"
+                  >
+                    <Icon name="instagram" className="h-3.5 w-3.5" />
+                  </a>
+                )}
                 <Link
                   href={`/leads/${lead.id}`}
                   className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100"

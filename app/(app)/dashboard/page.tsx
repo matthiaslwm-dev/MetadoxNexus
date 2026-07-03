@@ -5,10 +5,12 @@ import type { LeadStatus } from "@/lib/supabase/types";
 
 const STATUSES: { label: string; status: LeadStatus }[] = [
   { label: "New Leads", status: "New" },
+  { label: "Shortlisted", status: "Shortlisted" },
   { label: "Contacted", status: "Contacted" },
   { label: "Meeting Booked", status: "Meeting Booked" },
   { label: "Won", status: "Won" },
   { label: "Lost", status: "Lost" },
+  { label: "Not Applicable", status: "Not Applicable" },
 ];
 
 export default async function DashboardPage() {
@@ -32,7 +34,7 @@ export default async function DashboardPage() {
       .from("leads")
       .select("*", { count: "exact", head: true })
       .lt("next_follow_up", toDateKey(new Date()))
-      .not("status", "in", "(Won,Lost)"),
+      .not("status", "in", "(Won,Lost,Not Applicable)"),
   ]);
 
   const statusCounts = rest.slice(0, STATUSES.length);

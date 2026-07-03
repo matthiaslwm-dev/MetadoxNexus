@@ -4,6 +4,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { StatusBadge, PriorityBadge } from "@/components/badges";
 import { fadeInUp, staggerContainer } from "@/lib/motion";
+import { Icon } from "@/components/icons";
+import { normalizeUrl } from "@/lib/ui";
 
 export type LeadListItem = {
   id: string;
@@ -12,6 +14,7 @@ export type LeadListItem = {
   priority: string;
   next_follow_up: string | null;
   organisation_name: string | null;
+  instagram_url: string | null;
   ranking: number | null;
   measure_value: number | null;
   is_overdue: boolean;
@@ -83,13 +86,27 @@ function LeadCard({ lead }: { lead: LeadListItem }) {
         </div>
       </div>
 
-      <Link
-        href={`/leads/${lead.id}`}
-        className="mt-4 flex w-full items-center justify-center rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-800"
-        style={{ minHeight: 44 }}
-      >
-        View
-      </Link>
+      <div className="mt-4 flex items-center gap-2">
+        <Link
+          href={`/leads/${lead.id}`}
+          className="flex flex-1 items-center justify-center rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-800"
+          style={{ minHeight: 44 }}
+        >
+          View
+        </Link>
+        {lead.instagram_url && (
+          <a
+            href={normalizeUrl(lead.instagram_url)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Instagram"
+            className="flex items-center justify-center rounded-lg border border-gray-300 px-3 py-2.5 text-gray-700 transition-colors hover:bg-gray-100"
+            style={{ minHeight: 44, minWidth: 44 }}
+          >
+            <Icon name="instagram" className="h-4 w-4" />
+          </a>
+        )}
+      </div>
     </motion.div>
   );
 }

@@ -74,7 +74,7 @@ export default async function LeadsPage({
     query = query.lte("measure_value", Number(maxValue));
   }
   if (overdue) {
-    query = query.lt("next_follow_up", today).not("status", "in", "(Won,Lost)");
+    query = query.lt("next_follow_up", today).not("status", "in", "(Won,Lost,Not Applicable)");
   }
 
   const from = (page - 1) * PAGE_SIZE;
@@ -94,13 +94,15 @@ export default async function LeadsPage({
     priority: lead.priority,
     next_follow_up: lead.next_follow_up,
     organisation_name: lead.organisation_name,
+    instagram_url: lead.instagram_url,
     ranking: lead.ranking,
     measure_value: lead.measure_value,
     is_overdue:
       lead.next_follow_up !== null &&
       lead.next_follow_up < today &&
       lead.status !== "Won" &&
-      lead.status !== "Lost",
+      lead.status !== "Lost" &&
+      lead.status !== "Not Applicable",
   }));
 
   return (

@@ -7,7 +7,15 @@ import { motion } from "framer-motion";
 import { inputClass } from "@/lib/ui";
 import { Icon } from "@/components/icons";
 
-const STATUSES = ["New", "Contacted", "Meeting Booked", "Won", "Lost"];
+const STATUSES = [
+  "New",
+  "Shortlisted",
+  "Contacted",
+  "Meeting Booked",
+  "Won",
+  "Lost",
+  "Not Applicable",
+];
 const PRIORITIES = ["High", "Medium", "Low"];
 const DEBOUNCE_MS = 400;
 

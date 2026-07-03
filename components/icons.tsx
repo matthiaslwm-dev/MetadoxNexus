@@ -180,6 +180,39 @@ export function TrashIcon({ className }: IconProps) {
   );
 }
 
+const INSTAGRAM_GRADIENT_ID = "instagram-icon-gradient";
+
+export function InstagramIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <defs>
+        <linearGradient id={INSTAGRAM_GRADIENT_ID} x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#FFDD55" />
+          <stop offset="20%" stopColor="#FF543E" />
+          <stop offset="50%" stopColor="#C837AB" />
+          <stop offset="80%" stopColor="#7000FF" />
+          <stop offset="100%" stopColor="#4F5BD5" />
+        </linearGradient>
+      </defs>
+      <rect
+        x="2"
+        y="2"
+        width="20"
+        height="20"
+        rx="5"
+        stroke={`url(#${INSTAGRAM_GRADIENT_ID})`}
+        strokeWidth={2}
+      />
+      <path
+        d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z"
+        stroke={`url(#${INSTAGRAM_GRADIENT_ID})`}
+        strokeWidth={2}
+      />
+      <circle cx="17.5" cy="6.5" r="1.15" fill={`url(#${INSTAGRAM_GRADIENT_ID})`} />
+    </svg>
+  );
+}
+
 export function PlusIcon({ className }: IconProps) {
   return (
     <svg
@@ -209,6 +242,7 @@ const iconMap = {
   eye: EyeIcon,
   trash: TrashIcon,
   plus: PlusIcon,
+  instagram: InstagramIcon,
 };
 
 export function Icon({

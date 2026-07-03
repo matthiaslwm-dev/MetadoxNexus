@@ -4,16 +4,20 @@ import { useActionState, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { updateLead, type UpdateLeadState } from "@/app/(app)/leads/actions";
 import type { Lead } from "@/lib/supabase/types";
-import { inputClass } from "@/lib/ui";
+import { inputClass, normalizeUrl } from "@/lib/ui";
 import { fadeInUp, staggerContainer } from "@/lib/motion";
 import { Icon } from "@/components/icons";
 
-const STATUSES = ["New", "Contacted", "Meeting Booked", "Won", "Lost"];
+const STATUSES = [
+  "New",
+  "Shortlisted",
+  "Contacted",
+  "Meeting Booked",
+  "Won",
+  "Lost",
+  "Not Applicable",
+];
 const PRIORITIES = ["High", "Medium", "Low"];
-
-function normalizeUrl(url: string): string {
-  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
-}
 
 function Field({
   label,
