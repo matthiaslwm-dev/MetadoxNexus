@@ -15,10 +15,18 @@ export type Organisation = {
   created_at: string;
 };
 
+export type Agent = {
+  id: string;
+  name: string;
+  active: boolean;
+  created_at: string;
+};
+
 export type Lead = {
   id: string;
   name: string;
   organisation_id: string | null;
+  agent_id: string | null;
   email: string | null;
   phone: string | null;
   linkedin_url: string | null;
@@ -110,6 +118,8 @@ export type LeadWithLatestMetric = {
   name: string;
   organisation_id: string | null;
   organisation_name: string | null;
+  agent_id: string | null;
+  agent_name: string | null;
   instagram_url: string | null;
   linkedin_url: string | null;
   status: LeadStatus;
@@ -130,6 +140,12 @@ export type Database = {
         Update: Partial<Organisation>;
         Relationships: [];
       };
+      agents: {
+        Row: Agent;
+        Insert: Partial<Agent> & { name: string };
+        Update: Partial<Agent>;
+        Relationships: [];
+      };
       leads: {
         Row: Lead;
         Insert: Partial<Lead> & { name: string };
@@ -140,6 +156,13 @@ export type Database = {
             columns: ["organisation_id"];
             isOneToOne: false;
             referencedRelation: "organisations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "leads_agent_id_fkey";
+            columns: ["agent_id"];
+            isOneToOne: false;
+            referencedRelation: "agents";
             referencedColumns: ["id"];
           },
           {

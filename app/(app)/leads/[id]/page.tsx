@@ -18,6 +18,7 @@ export default async function LeadDetailPage({
     { data: lead, error: leadError },
     { data: metrics, error: metricsError },
     { data: activities, error: activitiesError },
+    { data: agents },
   ] = await Promise.all([
     supabase
       .from("leads")
@@ -34,6 +35,7 @@ export default async function LeadDetailPage({
       .select("*")
       .eq("lead_id", id)
       .order("created_at", { ascending: false }),
+    supabase.from("agents").select("id, name").eq("active", true).order("name"),
   ]);
 
   if (leadError || metricsError || activitiesError) {
@@ -80,6 +82,7 @@ export default async function LeadDetailPage({
           <LeadDetailForm
             lead={lead}
             organisationName={lead.organisations?.name ?? ""}
+            agents={agents ?? []}
           />
         </div>
 

@@ -19,7 +19,11 @@ const STATUSES = [
 const PRIORITIES = ["High", "Medium", "Low"];
 const DEBOUNCE_MS = 400;
 
-export function LeadsFilterBar() {
+export function LeadsFilterBar({
+  agents,
+}: {
+  agents: { id: string; name: string }[];
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -114,6 +118,20 @@ export function LeadsFilterBar() {
           {PRIORITIES.map((p) => (
             <option key={p} value={p}>
               {p}
+            </option>
+          ))}
+        </select>
+
+        <select
+          defaultValue={searchParams.get("agent") ?? ""}
+          onChange={(e) => updateParams({ agent: e.target.value })}
+          className={`${inputClass} w-full sm:w-auto`}
+          style={{ minHeight: 44 }}
+        >
+          <option value="">All agents</option>
+          {agents.map((a) => (
+            <option key={a.id} value={a.id}>
+              {a.name}
             </option>
           ))}
         </select>

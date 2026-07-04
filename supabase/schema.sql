@@ -9,10 +9,18 @@ create table if not exists organisations (
   created_at timestamptz default now()
 );
 
+create table if not exists agents (
+  id uuid primary key default gen_random_uuid(),
+  name text not null unique,
+  active boolean not null default true,
+  created_at timestamptz default now()
+);
+
 create table if not exists leads (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   organisation_id uuid references organisations(id),
+  agent_id uuid references agents(id) on delete set null,
   email text,
   phone text,
   linkedin_url text,
@@ -45,6 +53,7 @@ create table if not exists lead_activities (
 );
 
 create index if not exists leads_organisation_id_idx on leads(organisation_id);
+create index if not exists leads_agent_id_idx on leads(agent_id);
 create index if not exists leads_status_idx on leads(status);
 create index if not exists leads_priority_idx on leads(priority);
 create index if not exists lead_performance_metrics_lead_id_idx on lead_performance_metrics(lead_id);
@@ -67,12 +76,17 @@ create trigger leads_set_updated_at
 
 -- Row Level Security: any authenticated user can read/write (single-tenant MVP)
 alter table organisations enable row level security;
+alter table agents enable row level security;
 alter table leads enable row level security;
 alter table lead_performance_metrics enable row level security;
 alter table lead_activities enable row level security;
 
 drop policy if exists "authenticated full access" on organisations;
 create policy "authenticated full access" on organisations
+  for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
+drop policy if exists "authenticated full access" on agents;
+create policy "authenticated full access" on agents
   for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
 
 drop policy if exists "authenticated full access" on leads;
@@ -97,6 +111,8 @@ select
   l.name,
   l.organisation_id,
   o.name as organisation_name,
+  l.agent_id,
+  a.name as agent_name,
   l.status,
   l.priority,
   l.next_follow_up,
@@ -108,6 +124,7 @@ select
   l.linkedin_url
 from leads l
 left join organisations o on o.id = l.organisation_id
+left join agents a on a.id = l.agent_id
 left join lateral (
   select measure_name, ranking, measure_value
   from lead_performance_metrics

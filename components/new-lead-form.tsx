@@ -31,7 +31,11 @@ function Section({ children }: { children: React.ReactNode }) {
   return <motion.div variants={fadeInUp}>{children}</motion.div>;
 }
 
-export function NewLeadForm() {
+export function NewLeadForm({
+  agents,
+}: {
+  agents: { id: string; name: string }[];
+}) {
   const [state, formAction, pending] = useActionState<CreateLeadState, FormData>(
     createLead,
     undefined
@@ -54,6 +58,19 @@ export function NewLeadForm() {
       <Section>
         <Field label="Organisation">
           <input name="organisation" className={inputClass} />
+        </Field>
+      </Section>
+
+      <Section>
+        <Field label="Agent">
+          <select name="agent_id" defaultValue="" className={`${inputClass} bg-white`}>
+            <option value="">Unassigned</option>
+            {agents.map((a) => (
+              <option key={a.id} value={a.id}>
+                {a.name}
+              </option>
+            ))}
+          </select>
         </Field>
       </Section>
 

@@ -17,6 +17,7 @@ type SearchParams = Promise<{
   q?: string;
   status?: string;
   priority?: string;
+  agent?: string;
   minValue?: string;
   maxValue?: string;
   overdue?: string;
@@ -34,6 +35,7 @@ export default async function LeadsPage({
     q,
     status,
     priority,
+    agent,
     minValue,
     maxValue,
     overdue,
@@ -45,6 +47,12 @@ export default async function LeadsPage({
   const activeSort = parseSort(sort, dir);
   const today = toDateKey(new Date());
   const supabase = await createClient();
+
+  const { data: agents } = await supabase
+    .from("agents")
+    .select("id, name")
+    .eq("active", true)
+    .order("name");
 
   let query = supabase
     .from("leads_with_latest_metric")
@@ -67,6 +75,9 @@ export default async function LeadsPage({
   if (priority) {
     query = query.eq("priority", priority as LeadPriority);
   }
+  if (agent) {
+    query = query.eq("agent_id", agent);
+  }
   if (minValue) {
     query = query.gte("measure_value", Number(minValue));
   }
@@ -85,7 +96,7 @@ export default async function LeadsPage({
   }
 
   const totalPages = Math.max(1, Math.ceil((count ?? 0) / PAGE_SIZE));
-  const resultsKey = `${q ?? ""}|${status ?? ""}|${priority ?? ""}|${minValue ?? ""}|${maxValue ?? ""}|${overdue ?? ""}|${page}|${sort ?? ""}|${dir ?? ""}`;
+  const resultsKey = `${q ?? ""}|${status ?? ""}|${priority ?? ""}|${agent ?? ""}|${minValue ?? ""}|${maxValue ?? ""}|${overdue ?? ""}|${page}|${sort ?? ""}|${dir ?? ""}`;
 
   const leads: LeadListItem[] = (data ?? []).map((lead) => ({
     id: lead.id,
@@ -94,6 +105,7 @@ export default async function LeadsPage({
     priority: lead.priority,
     next_follow_up: lead.next_follow_up,
     organisation_name: lead.organisation_name,
+    agent_name: lead.agent_name,
     instagram_url: lead.instagram_url,
     linkedin_url: lead.linkedin_url,
     ranking: lead.ranking,
@@ -111,7 +123,7 @@ export default async function LeadsPage({
       <PageHeader title="Leads" description="Manage and prioritise your leads" />
 
       <Suspense>
-        <LeadsFilterBar />
+        <LeadsFilterBar agents={agents ?? []} />
       </Suspense>
 
       {leads.length === 0 && (

@@ -1,6 +1,7 @@
 export type SortColumn =
   | "name"
   | "organisation_name"
+  | "agent_name"
   | "status"
   | "priority"
   | "next_follow_up"
@@ -10,6 +11,7 @@ export type SortColumn =
 export const SORTABLE_COLUMNS: readonly SortColumn[] = [
   "name",
   "organisation_name",
+  "agent_name",
   "status",
   "priority",
   "next_follow_up",

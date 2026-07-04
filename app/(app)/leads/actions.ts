@@ -69,6 +69,7 @@ export async function updateLead(
   const nextFollowUp = String(formData.get("next_follow_up") ?? "").trim();
   const status = String(formData.get("status") ?? "New") as LeadStatus;
   const priority = String(formData.get("priority") ?? "Medium") as LeadPriority;
+  const agentId = String(formData.get("agent_id") ?? "").trim() || null;
 
   const { data: before } = await supabase
     .from("leads")
@@ -81,6 +82,7 @@ export async function updateLead(
     .update({
       name,
       organisation_id: organisationId,
+      agent_id: agentId,
       email: String(formData.get("email") ?? "").trim() || null,
       phone: String(formData.get("phone") ?? "").trim() || null,
       linkedin_url: String(formData.get("linkedin_url") ?? "").trim() || null,
@@ -133,12 +135,14 @@ export async function createLead(
 
   const status = String(formData.get("status") ?? "New") as LeadStatus;
   const priority = String(formData.get("priority") ?? "Medium") as LeadPriority;
+  const agentId = String(formData.get("agent_id") ?? "").trim() || null;
 
   const { data: created, error } = await supabase
     .from("leads")
     .insert({
       name,
       organisation_id: organisationId,
+      agent_id: agentId,
       email: String(formData.get("email") ?? "").trim() || null,
       phone: String(formData.get("phone") ?? "").trim() || null,
       linkedin_url: String(formData.get("linkedin_url") ?? "").trim() || null,

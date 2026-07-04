@@ -14,6 +14,7 @@ export type LeadListItem = {
   priority: string;
   next_follow_up: string | null;
   organisation_name: string | null;
+  agent_name: string | null;
   instagram_url: string | null;
   linkedin_url: string | null;
   ranking: number | null;
@@ -56,6 +57,9 @@ function LeadCard({ lead }: { lead: LeadListItem }) {
           <p className="text-sm text-gray-500">
             {lead.organisation_name ?? "—"}
           </p>
+          {lead.agent_name && (
+            <p className="text-xs text-gray-400">Agent: {lead.agent_name}</p>
+          )}
         </div>
         <div className="flex flex-col items-end gap-1.5">
           <StatusBadge status={lead.status} />

@@ -73,9 +73,11 @@ function Section({ children }: { children: React.ReactNode }) {
 export function LeadDetailForm({
   lead,
   organisationName,
+  agents,
 }: {
   lead: Lead;
   organisationName: string;
+  agents: { id: string; name: string }[];
 }) {
   const updateLeadWithId = updateLead.bind(null, lead.id);
   const [state, formAction, pending] = useActionState<
@@ -128,6 +130,23 @@ export function LeadDetailForm({
             onChange={(e) => setOrganisationValue(e.target.value)}
             className={inputClass}
           />
+        </Field>
+      </Section>
+
+      <Section>
+        <Field label="Agent">
+          <select
+            name="agent_id"
+            defaultValue={lead.agent_id ?? ""}
+            className={`${inputClass} bg-white`}
+          >
+            <option value="">Unassigned</option>
+            {agents.map((a) => (
+              <option key={a.id} value={a.id}>
+                {a.name}
+              </option>
+            ))}
+          </select>
         </Field>
       </Section>
 

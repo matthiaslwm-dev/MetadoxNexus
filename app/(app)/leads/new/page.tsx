@@ -1,8 +1,16 @@
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
 import { PageHeader } from "@/components/stat-card";
 import { NewLeadForm } from "@/components/new-lead-form";
 
-export default function NewLeadPage() {
+export default async function NewLeadPage() {
+  const supabase = await createClient();
+  const { data: agents } = await supabase
+    .from("agents")
+    .select("id, name")
+    .eq("active", true)
+    .order("name");
+
   return (
     <div>
       <Link
@@ -27,7 +35,7 @@ export default function NewLeadPage() {
       <PageHeader title="Add Lead" description="Create a new lead" />
 
       <div className="max-w-2xl">
-        <NewLeadForm />
+        <NewLeadForm agents={agents ?? []} />
       </div>
     </div>
   );
