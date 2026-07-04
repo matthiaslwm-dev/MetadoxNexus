@@ -132,7 +132,6 @@ export function LeadsTable({
             <SortableHeader column="name" label="Name" activeSort={activeSort} />
             <SortableHeader column="organisation_name" label="Organisation" activeSort={activeSort} />
             <SortableHeader column="agent_name" label="Agent" activeSort={activeSort} />
-            <SortableHeader column="ranking" label="Ranking" activeSort={activeSort} />
             <SortableHeader column="measure_value" label="Earnings" activeSort={activeSort} />
             <SortableHeader column="status" label="Status" activeSort={activeSort} />
             <SortableHeader column="priority" label="Priority" activeSort={activeSort} />
@@ -161,9 +160,6 @@ export function LeadsTable({
               </td>
               <td className="px-4 py-3 text-gray-600">
                 {lead.agent_name ?? "—"}
-              </td>
-              <td className="px-4 py-3 text-gray-600">
-                {lead.ranking ?? "—"}
               </td>
               <td className="px-4 py-3 text-gray-600">
                 {lead.measure_value ?? "—"}
