@@ -1,6 +1,7 @@
 export type LeadStatus =
   | "New"
   | "Shortlisted"
+  | "Connected"
   | "Contacted"
   | "Meeting Booked"
   | "Won"
@@ -77,6 +78,7 @@ export type SignalFeed = {
   post_url: string | null;
   post_text: string;
   post_date: string | null;
+  location: string | null;
   pain_summary: string | null;
   pain_categories: string[];
   lead_score: number;

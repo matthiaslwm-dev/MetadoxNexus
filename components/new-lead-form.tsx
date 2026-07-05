@@ -10,6 +10,7 @@ import { Icon } from "@/components/icons";
 const STATUSES = [
   "New",
   "Shortlisted",
+  "Connected",
   "Contacted",
   "Meeting Booked",
   "Won",

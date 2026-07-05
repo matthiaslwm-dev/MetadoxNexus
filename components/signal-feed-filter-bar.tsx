@@ -25,6 +25,7 @@ const DEBOUNCE_MS = 400;
 // Filters beyond search + sort that count toward the "Filters (n)" badge and
 // live in the collapsible panel.
 const ADVANCED_FILTER_KEYS = [
+  "location",
   "platform",
   "painCategory",
   "opportunityType",
@@ -44,6 +45,7 @@ export function SignalFeedFilterBar() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [search, setSearch] = useState(searchParams.get("q") ?? "");
+  const [location, setLocation] = useState(searchParams.get("location") ?? "");
   const [minScore, setMinScore] = useState(searchParams.get("minScore") ?? "");
   const [maxScore, setMaxScore] = useState(searchParams.get("maxScore") ?? "");
   const [minIntent, setMinIntent] = useState(searchParams.get("minIntent") ?? "");
@@ -80,6 +82,7 @@ export function SignalFeedFilterBar() {
     const params = new URLSearchParams(searchParams.toString());
     ADVANCED_FILTER_KEYS.forEach((key) => params.delete(key));
     params.delete("page");
+    setLocation("");
     setMinScore("");
     setMaxScore("");
     setMinIntent("");
@@ -191,6 +194,18 @@ export function SignalFeedFilterBar() {
           >
             <div className="mt-1 space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                <input
+                  type="text"
+                  value={location}
+                  onChange={(e) => {
+                    setLocation(e.target.value);
+                    handleDebounced("location", e.target.value);
+                  }}
+                  placeholder="Location (e.g. Singapore)"
+                  className={`${inputClass} w-full sm:w-auto`}
+                  style={{ minHeight: 44 }}
+                />
+
                 <select
                   defaultValue={searchParams.get("platform") ?? ""}
                   onChange={(e) => updateParams({ platform: e.target.value })}

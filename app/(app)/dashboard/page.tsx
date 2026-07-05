@@ -6,6 +6,7 @@ import type { LeadStatus } from "@/lib/supabase/types";
 const STATUSES: { label: string; status: LeadStatus }[] = [
   { label: "New Leads", status: "New" },
   { label: "Shortlisted", status: "Shortlisted" },
+  { label: "Connected", status: "Connected" },
   { label: "Contacted", status: "Contacted" },
   { label: "Meeting Booked", status: "Meeting Booked" },
   { label: "Won", status: "Won" },

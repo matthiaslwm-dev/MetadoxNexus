@@ -73,6 +73,7 @@ export function SignalCsvImportForm() {
           <span className="font-medium text-gray-800">
             {SIGNAL_REQUIRED_COLUMNS.join(", ")}
           </span>
+          . Optional: <span className="font-medium text-gray-800">location</span>.
         </p>
 
         <motion.label

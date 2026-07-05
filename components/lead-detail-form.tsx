@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { updateLead, type UpdateLeadState } from "@/app/(app)/leads/actions";
 import type { Lead } from "@/lib/supabase/types";
@@ -12,6 +12,7 @@ import { SocialFinder } from "@/components/social-finder";
 const STATUSES = [
   "New",
   "Shortlisted",
+  "Connected",
   "Contacted",
   "Meeting Booked",
   "Won",
@@ -85,22 +86,11 @@ export function LeadDetailForm({
     FormData
   >(updateLeadWithId, undefined);
 
-  const [justSaved, setJustSaved] = useState(false);
   const [nextFollowUp, setNextFollowUp] = useState(lead.next_follow_up ?? "");
   const [nameValue, setNameValue] = useState(lead.name);
   const [organisationValue, setOrganisationValue] = useState(organisationName);
   const [linkedinUrl, setLinkedinUrl] = useState(lead.linkedin_url ?? "");
   const [instagramUrl, setInstagramUrl] = useState(lead.instagram_url ?? "");
-
-  useEffect(() => {
-    if (!state?.success) return;
-    const showTimeout = setTimeout(() => setJustSaved(true), 0);
-    const hideTimeout = setTimeout(() => setJustSaved(false), 1600);
-    return () => {
-      clearTimeout(showTimeout);
-      clearTimeout(hideTimeout);
-    };
-  }, [state]);
 
   return (
     <motion.form
@@ -322,11 +312,7 @@ export function LeadDetailForm({
           type="submit"
           disabled={pending}
           whileTap={{ scale: 0.98 }}
-          animate={{
-            backgroundColor: justSaved ? "#16a34a" : "#111827",
-          }}
-          transition={{ duration: 0.25 }}
-          className="flex w-full items-center justify-center rounded-lg px-4 py-3 text-base font-medium text-white shadow-sm transition-opacity disabled:opacity-60 md:w-auto md:px-8"
+          className="flex w-full items-center justify-center rounded-lg bg-gray-900 px-4 py-3 text-base font-medium text-white shadow-sm transition-opacity disabled:opacity-60 md:w-auto md:px-8"
           style={{ minHeight: 44 }}
         >
           <AnimatePresence mode="wait" initial={false}>
@@ -344,15 +330,6 @@ export function LeadDetailForm({
                   transition={{ duration: 0.7, repeat: Infinity, ease: "linear" }}
                 />
                 Saving...
-              </motion.span>
-            ) : justSaved ? (
-              <motion.span
-                key="saved"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                Saved ✓
               </motion.span>
             ) : (
               <motion.span

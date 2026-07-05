@@ -12,6 +12,7 @@ const PAGE_SIZE = 10;
 
 type SearchParams = Promise<{
   q?: string;
+  location?: string;
   platform?: string;
   painCategory?: string;
   opportunityType?: string;
@@ -35,6 +36,7 @@ export default async function SignalFeedPage({
 }) {
   const {
     q,
+    location,
     platform,
     painCategory,
     opportunityType,
@@ -55,6 +57,7 @@ export default async function SignalFeedPage({
 
   const filters: SignalFeedListFilters = {
     q,
+    location,
     platform,
     painCategory,
     opportunityType,

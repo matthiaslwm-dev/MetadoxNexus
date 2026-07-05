@@ -6,6 +6,7 @@ import { LeadsTable } from "@/components/leads-table";
 import { LeadCardsGrid } from "@/components/lead-card";
 import { LeadsPagination } from "@/components/leads-pagination";
 import { EmptyState } from "@/components/empty-state";
+import { SuccessToast } from "@/components/success-toast";
 import { parseSort } from "@/lib/leads-sort";
 import { toDateKey } from "@/lib/calendar";
 import type { LeadListItem } from "@/components/lead-card";
@@ -120,6 +121,10 @@ export default async function LeadsPage({
 
   return (
     <div>
+      <Suspense>
+        <SuccessToast />
+      </Suspense>
+
       <PageHeader title="Leads" description="Manage and prioritise your leads" />
 
       <Suspense>

@@ -6,6 +6,7 @@ import type { RawSignalInput, ScoredSignal } from "@/lib/signal-feed/types";
 
 export type SignalFeedListFilters = {
   q?: string;
+  location?: string;
   platform?: string;
   painCategory?: string;
   opportunityType?: string;
@@ -47,6 +48,7 @@ export class SignalFeedRepository {
         `display_name.ilike.%${filters.q}%,username.ilike.%${filters.q}%,post_text.ilike.%${filters.q}%`
       );
     }
+    if (filters.location) q = q.ilike("location", `%${filters.location}%`);
     if (filters.platform) q = q.eq("platform", filters.platform);
     if (filters.painCategory) q = q.contains("pain_categories", [filters.painCategory]);
     if (filters.opportunityType) q = q.eq("opportunity_type", filters.opportunityType);

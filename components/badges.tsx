@@ -10,6 +10,7 @@ import type {
 const statusStyles: Record<LeadStatus, string> = {
   New: "bg-blue-50 text-blue-700 ring-blue-600/15",
   Shortlisted: "bg-cyan-50 text-cyan-700 ring-cyan-600/15",
+  Connected: "bg-teal-50 text-teal-700 ring-teal-600/15",
   Contacted: "bg-amber-50 text-amber-700 ring-amber-600/15",
   "Meeting Booked": "bg-purple-50 text-purple-700 ring-purple-600/15",
   Won: "bg-green-50 text-green-700 ring-green-600/15",
@@ -20,6 +21,7 @@ const statusStyles: Record<LeadStatus, string> = {
 const statusDot: Record<LeadStatus, string> = {
   New: "bg-blue-500",
   Shortlisted: "bg-cyan-500",
+  Connected: "bg-teal-500",
   Contacted: "bg-amber-500",
   "Meeting Booked": "bg-purple-500",
   Won: "bg-green-500",

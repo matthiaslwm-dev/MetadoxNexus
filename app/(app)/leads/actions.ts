@@ -110,7 +110,7 @@ export async function updateLead(
   revalidatePath("/dashboard");
   revalidatePath("/schedule");
 
-  return { success: true };
+  redirect(`/leads?success=${encodeURIComponent(`${name} updated`)}`);
 }
 
 export type CreateLeadState = { error?: string } | undefined;

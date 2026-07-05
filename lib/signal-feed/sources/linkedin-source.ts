@@ -61,6 +61,9 @@ function mapItem(item: Record<string, unknown>): RawSignalInput | null {
     post_date:
       firstDefined(postedAt, ["date"]) ??
       firstDefined(item, ["postedAt", "publishedAt", "date", "postDate"]),
+    location:
+      firstDefined(author, ["location", "geoRegion", "location_name"]) ??
+      firstDefined(item, ["authorLocation", "location", "geoRegion"]),
   };
 }
 

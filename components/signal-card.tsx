@@ -111,6 +111,7 @@ export function SignalCard({ signal }: { signal: SignalFeed }) {
             <p className="font-medium text-gray-900">{signal.display_name}</p>
             <p className="text-sm text-gray-500">
               {signal.username ? `@${signal.username}` : "—"} · {formatDate(signal.post_date)}
+              {signal.location ? ` · ${signal.location}` : ""}
             </p>
           </div>
         </div>

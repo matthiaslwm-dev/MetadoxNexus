@@ -18,6 +18,7 @@ export type SignalCsvRow = {
   post_url: string;
   post_date: string;
   post_text: string;
+  location: string;
 };
 
 export type SignalParseResult =
@@ -54,6 +55,7 @@ export function parseSignalFeedCsv(text: string): SignalParseResult {
       post_url: (row["post_url"] ?? "").trim(),
       post_date: (row["post_date"] ?? "").trim(),
       post_text: row["post_text"].trim(),
+      location: (row["location"] ?? "").trim(),
     }));
 
   if (rows.length === 0) {

@@ -45,6 +45,7 @@ export async function createSignal(
     post_url: String(formData.get("post_url") ?? "").trim() || null,
     post_text,
     post_date: String(formData.get("post_date") ?? "").trim() || null,
+    location: String(formData.get("location") ?? "").trim() || null,
   };
 
   const analysis = signalAnalysisService.analyze(input);
@@ -166,6 +167,7 @@ export async function importSignals(rows: SignalCsvRow[]): Promise<ImportSignals
       post_url: row.post_url || null,
       post_text: row.post_text,
       post_date: row.post_date || null,
+      location: row.location || null,
     };
     return { ...input, ...signalAnalysisService.analyze(input) };
   });

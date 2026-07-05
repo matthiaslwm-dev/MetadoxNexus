@@ -47,6 +47,7 @@ function mapItem(item: Record<string, unknown>): RawSignalInput | null {
     post_url: firstDefined(item, ["url", "postUrl"]),
     post_text,
     post_date: firstDefined(item, ["timestamp", "postedAt", "date"]),
+    location: firstDefined(item, ["locationName", "location"]),
   };
 }
 

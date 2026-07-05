@@ -15,6 +15,7 @@ export type RawSignalInput = {
   post_url?: string | null;
   post_text: string;
   post_date?: string | null;
+  location?: string | null;
 };
 
 // Output of SignalAnalysisService.analyze() - everything the mock "AI" derives

@@ -66,6 +66,9 @@ export function SignalManualAddForm() {
           <Field label="Post URL">
             <input name="post_url" className={inputClass} />
           </Field>
+          <Field label="Location">
+            <input name="location" placeholder="e.g. Singapore" className={inputClass} />
+          </Field>
         </div>
       </Section>
 
